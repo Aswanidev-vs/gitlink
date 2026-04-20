@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="MangaRead - Your ultimate manga reading destination with trending, popular, and latest manga">
+    <meta name="keywords" content="manga, read manga, manga reader, manga online, manga free">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: http:; connect-src 'self' http://localhost:8080 https://api.jikan.moe; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+    
+    <title>MangaRead - Your Ultimate Manga Reader</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">📚</span>
+                <span class="logo-text">MangaRead</span>
+            </a>
+            
+            <nav class="nav-desktop">
+                <a href="/" class="nav-link active">Home</a>
+                <a href="/search.html" class="nav-link">Browse</a>
+                <a href="/bookmarks.html" class="nav-link">Bookmarks</a>
+                <a href="/history.html" class="nav-link">History</a>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="search-toggle" id="searchToggle" aria-label="Toggle search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+                
+                <div class="auth-buttons" id="authButtons">
+                    <button class="btn btn-ghost" onclick="openModal('loginModal')">Log In</button>
+                    <button class="btn btn-primary" onclick="openModal('signupModal')">Sign Up</button>
+                </div>
+                
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <button class="user-avatar" id="userAvatar" aria-label="User menu">
+                        <span id="userInitial">U</span>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/profile.html">Profile</a>
+                        <a href="/bookmarks.html">Bookmarks</a>
+                        <a href="/history.html">History</a>
+                        <button onclick="logout()">Logout</button>
+                    </div>
+                </div>
+                
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="search-bar" id="searchBar">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search manga..." autocomplete="off">
+                <button class="search-btn" onclick="performSearch()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <nav class="nav-mobile" id="mobileMenu">
+            <a href="/" class="nav-link active">Home</a>
+            <a href="/search.html" class="nav-link">Browse</a>
+            <a href="/bookmarks.html" class="nav-link">Bookmarks</a>
+            <a href="/history.html" class="nav-link">History</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Discover Your Next Favorite Manga</h1>
+                <p class="hero-subtitle">Read thousands of manga titles with our modern, immersive reading experience</p>
+                <div class="hero-actions">
+                    <a href="/search.html" class="btn btn-primary btn-lg">Start Reading</a>
+                    <a href="#trending" class="btn btn-ghost btn-lg">Explore Trending</a>
+                </div>
+            </div>
+            <div class="hero-decoration">
+                <div class="hero-shape hero-shape-1"></div>
+                <div class="hero-shape hero-shape-2"></div>
+                <div class="hero-shape hero-shape-3"></div>
+            </div>
+        </section>
+
+        <!-- Trending Section -->
+        <section class="section" id="trending">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">🔥 Trending Now</h2>
+                    <a href="/search.html?sort=trending" class="section-link">View All</a>
+                </div>
+                <div class="manga-grid" id="trendingGrid">
+                    <!-- Loading skeleton -->
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">⭐ Most Popular</h2>
+                    <a href="/search.html?sort=popular" class="section-link">View All</a>
+                </div>
+                <div class="manga-grid" id="popularGrid">
+                    <!-- Loading skeleton -->
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">📖 Latest Updates</h2>
+                    <a href="/search.html?sort=latest" class="section-link">View All</a>
+                </div>
+                <div class="manga-grid" id="latestGrid">
+                    <!-- Loading skeleton -->
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Genre Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">📚 Browse by Genre</h2>
+                </div>
+                <div class="genre-grid">
+                    <a href="/search.html?genre=1" class="genre-card">Action</a>
+                    <a href="/search.html?genre=2" class="genre-card">Adventure</a>
+                    <a href="/search.html?genre=4" class="genre-card">Comedy</a>
+                    <a href="/search.html?genre=8" class="genre-card">Drama</a>
+                    <a href="/search.html?genre=10" class="genre-card">Fantasy</a>
+                    <a href="/search.html?genre=14" class="genre-card">Horror</a>
+                    <a href="/search.html?genre=22" class="genre-card">Romance</a>
+                    <a href="/search.html?genre=24" class="genre-card">Sci-Fi</a>
+                    <a href="/search.html?genre=36" class="genre-card">Slice of Life</a>
+                    <a href="/search.html?genre=37" class="genre-card">Supernatural</a>
+                    <a href="/search.html?genre=41" class="genre-card">Thriller</a>
+                    <a href="/search.html?genre=9" class="genre-card">Ecchi</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <span class="logo-icon">📚</span>
+                        <span class="logo-text">MangaRead</span>
+                    </a>
+                    <p class="footer-description">Your ultimate manga reading destination with thousands of titles and an immersive reading experience.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Browse</h4>
+                        <a href="/search.html">All Manga</a>
+                        <a href="/search.html?sort=trending">Trending</a>
+                        <a href="/search.html?sort=popular">Popular</a>
+                        <a href="/search.html?sort=latest">Latest</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Genres</h4>
+                        <a href="/search.html?genre=1">Action</a>
+                        <a href="/search.html?genre=22">Romance</a>
+                        <a href="/search.html?genre=10">Fantasy</a>
+                        <a href="/search.html?genre=4">Comedy</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Account</h4>
+                        <a href="/bookmarks.html">Bookmarks</a>
+                        <a href="/history.html">Reading History</a>
+                        <a href="/profile.html">Profile</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 MangaRead. All rights reserved.</p>
+                <p class="footer-disclaimer">This site does not store any files on its server. All contents are provided by non-affiliated third parties.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-backdrop" onclick="closeModal('loginModal')"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('loginModal')" aria-label="Close modal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="modal-header">
+                <h2>Welcome Back</h2>
+                <p>Log in to continue reading</p>
+            </div>
+            
+            <form id="loginForm" class="modal-form">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="Enter your email">
+                    <div class="error-message" id="loginEmailError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Enter your password">
+                        <button type="button" class="toggle-password" onclick="togglePassword('loginPassword', this)" aria-label="Toggle password visibility">Show</button>
+                    </div>
+                    <div class="error-message" id="loginPasswordError"></div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-full">Log In</button>
+                
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="#" onclick="switchModal('loginModal', 'signupModal')">Sign up</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-backdrop" onclick="closeModal('signupModal')"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('signupModal')" aria-label="Close modal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="modal-header">
+                <h2>Create Account</h2>
+                <p>Join MangaRead today</p>
+            </div>
+            
+            <form id="signupForm" class="modal-form">
+                <div class="form-group">
+                    <label for="signupUsername">Username</label>
+                    <input type="text" id="signupUsername" name="username" required autocomplete="username" placeholder="Choose a username" minlength="3" maxlength="20" pattern="^[a-zA-Z0-9_]{3,20}$">
+                    <div class="error-message" id="signupUsernameError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="Enter your email">
+                    <div class="error-message" id="signupEmailError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="Create a password" minlength="8">
+                        <button type="button" class="toggle-password" onclick="togglePassword('signupPassword', this)" aria-label="Toggle password visibility">Show</button>
+                    </div>
+                    <div class="password-requirements">
+                        <strong>Password requirements:</strong>
+                        <ul>
+                            <li>At least 8 characters long</li>
+                            <li>One uppercase letter (A-Z)</li>
+                            <li>One lowercase letter (a-z)</li>
+                            <li>One number (0-9)</li>
+                            <li>One special character (@$!%*?&)</li>
+                        </ul>
+                    </div>
+                    <div class="error-message" id="signupPasswordError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirm Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="signupConfirmPassword" name="confirmPassword" required autocomplete="new-password" placeholder="Confirm your password">
+                        <button type="button" class="toggle-password" onclick="togglePassword('signupConfirmPassword', this)" aria-label="Toggle password visibility">Show</button>
+                    </div>
+                    <div class="error-message" id="signupConfirmPasswordError"></div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+                
+                <div class="form-footer">
+                    <p>Already have an account? <a href="#" onclick="switchModal('signupModal', 'loginModal')">Log in</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

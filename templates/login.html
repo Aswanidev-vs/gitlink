@@ -3,200 +3,369 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Connect - Login to your account">
+  <meta name="robots" content="noindex, nofollow">
+  
+  <!-- Security Headers -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+  
   <title>Connect - Login</title>
   <style>
     * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #EDE9FE; /* Light violet background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #EDE9FE;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-.container {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    transition: transform 0.3s ease;
-}
-
-.container:hover {
-    transform: translateY(-5px);
-}
-
-h1 {
-    text-align: center;
-    font-size: 1.75rem;
-    font-weight: 600;
-    color: #1a202c;
-    margin-bottom: 2rem;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #2d3748;
-    margin-bottom: 0.5rem;
-}
-
-.input-wrapper {
-    position: relative;
-}
-
-input {
-    width: 100%;
-    padding: 0.875rem;
-    border: 1px solid #d4d8e8;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: #1a202c;
-    background-color: #f8fafc;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-input:focus {
-    outline: none;
-    border-color: #A78BFA;
-    box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
-}
-
-input::placeholder {
-    color: #9ca3af;
-}
-
-input.invalid {
-    border-color: #dc2626;
-}
-
-.toggle-password {
-    position: absolute;
-    right: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #6b7280;
-    font-size: 0.85rem;
-    font-weight: 500;
-    padding: 0.25rem 0.5rem;
-    transition: color 0.2s ease;
-}
-
-.toggle-password:hover {
-    color: #A78BFA;
-}
-
-button[type="submit"] {
-    width: 100%;
-    padding: 0.875rem;
-    background: linear-gradient(90deg, #A78BFA, #7C3AED);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-}
-
-button[type="submit"]:hover {
-    background: linear-gradient(90deg, #7C3AED, #6D28D9);
-    transform: translateY(-2px);
-}
-
-button[type="submit"]:active {
-    transform: translateY(0);
-}
-
-.server-error {
-    color: #dc2626;
-    font-size: 0.9rem;
-    text-align: center;
-    margin-bottom: 1rem;
-    display: none;
-}
-
-.link {
-    text-align: center;
-    margin-top: 1.5rem;
-    font-size: 0.9rem;
-    color: #4a5568;
-}
-
-.link a {
-    color: #A78BFA;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.link a:hover {
-    text-decoration: underline;
-}
-
-@media (max-width: 480px) {
     .container {
-        padding: 1.5rem;
-        margin: 1rem;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
     }
 
     h1 {
-        font-size: 1.5rem;
+      text-align: center;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #1a202c;
+      margin-bottom: 2rem;
     }
-}
 
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #2d3748;
+      margin-bottom: 0.5rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.875rem;
+      border: 1px solid #d4d8e8;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #1a202c;
+      background-color: #f8fafc;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #A78BFA;
+      box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
+    }
+
+    input::placeholder {
+      color: #9ca3af;
+    }
+
+    input.invalid {
+      border-color: #dc2626;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #6b7280;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.25rem 0.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .toggle-password:hover {
+      color: #A78BFA;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 0.875rem;
+      background: linear-gradient(90deg, #A78BFA, #7C3AED);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button[type="submit"]:hover {
+      background: linear-gradient(90deg, #7C3AED, #6D28D9);
+      transform: translateY(-2px);
+    }
+
+    button[type="submit"]:active {
+      transform: translateY(0);
+    }
+
+    button[type="submit"]:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .server-error {
+      color: #dc2626;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: #4a5568;
+    }
+
+    .link a {
+      color: #A78BFA;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+    }
+
+    .error-message {
+      color: #dc2626;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 1.5rem;
+        margin: 1rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Log in to Connect</h1>
-    <div id="serverError" class="server-error"></div>
-<form id="loginForm" action="/login" method="POST">
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" placeholder="Enter your email" required>
-  </div>
+    <div id="serverError" class="server-error" role="alert" aria-live="polite"></div>
+    
+    <form id="loginForm" action="/login" method="POST" novalidate>
+      <!-- CSRF Token (should be generated by server) -->
+      <input type="hidden" name="_csrf" id="csrfToken" value="">
+      
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          name="email" 
+          id="email" 
+          placeholder="Enter your email" 
+          required
+          autocomplete="email"
+          aria-describedby="emailError"
+          maxlength="100"
+        >
+        <div id="emailError" class="error-message" role="alert"></div>
+      </div>
 
-  <div class="form-group">
-    <label for="password">Password</label>
-    <div class="input-wrapper">
-      <input type="password" name="password" id="password" placeholder="Enter your password" required>
-      <button type="button" class="toggle-password" onclick="togglePassword('password', this)">Show</button>
-    </div>
-  </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <input 
+            type="password" 
+            name="password" 
+            id="password" 
+            placeholder="Enter your password" 
+            required
+            autocomplete="current-password"
+            aria-describedby="passwordError"
+            minlength="8"
+            maxlength="50"
+          >
+          <button type="button" class="toggle-password" onclick="togglePassword('password', this)" aria-label="Toggle password visibility">Show</button>
+        </div>
+        <div id="passwordError" class="error-message" role="alert"></div>
+      </div>
 
-  <button type="submit">Login</button>
-</form>
-
+      <button type="submit" id="submitBtn">Login</button>
+    </form>
 
     <div class="link">
-      Don’t have an account? <a href="/signup">Sign up</a>
+      Don't have an account? <a href="/signup">Sign up</a>
     </div>
   </div>
 
   <script>
-    function togglePassword(inputId, button) {
-  const input = document.getElementById(inputId);
-  const isPassword = input.type === 'password';
-  input.type = isPassword ? 'text' : 'password';
-  button.textContent = isPassword ? 'Hide' : 'Show';
-}
+    // Security: Sanitize input to prevent XSS
+    function sanitizeInput(input) {
+      const div = document.createElement('div');
+      div.textContent = input;
+      return div.innerHTML;
+    }
 
+    // Security: Validate email format
+    function validateEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email) && email.length <= 100;
+    }
+
+    // Security: Validate password
+    function validatePassword(password) {
+      return password.length >= 8 && password.length <= 50;
+    }
+
+    // Toggle password visibility
+    function togglePassword(inputId, button) {
+      const input = document.getElementById(inputId);
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      button.textContent = isPassword ? 'Hide' : 'Show';
+      button.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+    }
+
+    // Show error message
+    function showError(elementId, message) {
+      const errorElement = document.getElementById(elementId);
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+    }
+
+    // Hide error message
+    function hideError(elementId) {
+      const errorElement = document.getElementById(elementId);
+      errorElement.style.display = 'none';
+    }
+
+    // Show server error
+    function showServerError(message) {
+      const serverError = document.getElementById('serverError');
+      serverError.textContent = message;
+      serverError.style.display = 'block';
+    }
+
+    // Real-time validation on blur
+    document.getElementById('email').addEventListener('blur', function() {
+      const email = this.value.trim();
+      if (!email) {
+        showError('emailError', 'Email is required');
+        this.classList.add('invalid');
+      } else if (!validateEmail(email)) {
+        showError('emailError', 'Please enter a valid email address');
+        this.classList.add('invalid');
+      } else {
+        hideError('emailError');
+        this.classList.remove('invalid');
+      }
+    });
+
+    document.getElementById('password').addEventListener('blur', function() {
+      const password = this.value;
+      if (!password) {
+        showError('passwordError', 'Password is required');
+        this.classList.add('invalid');
+      } else if (!validatePassword(password)) {
+        showError('passwordError', 'Password must be 8-50 characters');
+        this.classList.add('invalid');
+      } else {
+        hideError('passwordError');
+        this.classList.remove('invalid');
+      }
+    });
+
+    // Form submission with validation
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const submitBtn = document.getElementById('submitBtn');
+      
+      let hasErrors = false;
+
+      // Validate email
+      if (!email) {
+        showError('emailError', 'Email is required');
+        document.getElementById('email').classList.add('invalid');
+        hasErrors = true;
+      } else if (!validateEmail(email)) {
+        showError('emailError', 'Please enter a valid email address');
+        document.getElementById('email').classList.add('invalid');
+        hasErrors = true;
+      } else {
+        hideError('emailError');
+        document.getElementById('email').classList.remove('invalid');
+      }
+
+      // Validate password
+      if (!password) {
+        showError('passwordError', 'Password is required');
+        document.getElementById('password').classList.add('invalid');
+        hasErrors = true;
+      } else if (!validatePassword(password)) {
+        showError('passwordError', 'Password must be 8-50 characters');
+        document.getElementById('password').classList.add('invalid');
+        hasErrors = true;
+      } else {
+        hideError('passwordError');
+        document.getElementById('password').classList.remove('invalid');
+      }
+
+      if (!hasErrors) {
+        // Disable submit button to prevent double submission
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Logging in...';
+        
+        // Submit the form
+        this.submit();
+      }
+    });
+
+    // Security: Prevent form resubmission on page load
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
   </script>
 </body>
 </html>
